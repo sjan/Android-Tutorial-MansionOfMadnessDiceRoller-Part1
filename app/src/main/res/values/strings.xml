@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">DiceRoller</string>
+    <string name="hold_button_label">Hold</string>
+    <string name="add_button_label">ADD</string>
+    <string name="rem_button_label">REM</string>
+    <string name="roll_button_label">ROLL</string>
 </resources>

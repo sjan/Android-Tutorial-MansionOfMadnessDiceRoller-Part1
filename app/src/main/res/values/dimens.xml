@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="row_height">72dp</dimen>
+    <dimen name="row_padding">16dp</dimen>
+    <dimen name="control_bar_height">72dp</dimen>
+    <dimen name="image_width">72dp</dimen>
+    <dimen name="image_height">72dp</dimen>
+</resources>
