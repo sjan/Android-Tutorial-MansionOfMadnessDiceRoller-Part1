@@ -17,10 +17,10 @@
     </FrameLayout>
 
     <ImageView
+        android:id="@+id/dice_icon"
         android:layout_centerInParent="true"
         android:layout_width="@dimen/image_width"
-        android:layout_height="@dimen/image_height"
-        android:src="@mipmap/ic_launcher"/>
+        android:layout_height="@dimen/image_height"/>
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="@dimen/row_height"
@@ -28,6 +28,7 @@
         android:layout_centerVertical="true"
         android:padding="@dimen/row_padding">
         <Button
+            android:id="@+id/dice_hold_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/hold_button_label">
