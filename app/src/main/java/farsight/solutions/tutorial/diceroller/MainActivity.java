@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static class Dice {
+        public static int SIDES = 8;
         public enum Face {
             BLANK,
             MAGNIFY,
@@ -128,8 +129,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void roll() {
-            int num = random.nextInt(Face.values().length);
-            this.diceVal = Face.values()[num];
+            int num = random.nextInt(4);
+            if(num == 0) { //25% magify
+                this.diceVal = Face.MAGNIFY;
+            } else {
+                //37.5% star, 37.5% blank
+                if(random.nextBoolean()) {
+                    this.diceVal = Face.BLANK;
+                } else {
+                    this.diceVal = Face.STAR;
+                }
+            }
         }
 
         public void toggleHold() {
