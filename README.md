@@ -1,6 +1,6 @@
 Android App - Mansions of Madness Dice
 =======================================
-A little while ago, I got into a board game called [Mansions of Madness](https://boardgamegeek.com/boardgame/83330/mansions-madness). The game is a bit like the classic [Clue](https://boardgamegeek.com/boardgame/1294/clue) where players roam around a house trying to solve some mystery. Progressing through the game, situations arise where the player will have to roll dice. The number of dice to roll ranges from 1 to probably like 10. Oddly, the game only includes 6 dice! Given the fact that the game uses **custom 8 sided dice**, I figure this to be a perfect opportunity to build an app!
+A little while ago, I got into a board game called [Mansions of Madness](https://boardgamegeek.com/boardgame/83330/mansions-madness). The game is a bit like the classic [Clue](https://boardgamegeek.com/boardgame/1294/clue) where players roam around a house trying to solve some mystery. Progressing through the game, situations arise where the player will have to roll dice. The number of dice to roll ranges from 1 to probably like 10. Oddly, the game only includes 6 dice! This game be a perfect opportunity to build an dice roller app.
 
 ![MoM Dice](./images/dice.jpg)
 
