@@ -447,5 +447,3 @@ Change the diceValue to next.
     ....
 
 ![Screenshot1](./images/screenshot02.png)
-
-[Github  Source](https://github.com/sjan/Android-Ant-DiceRoller/tree/Part1)
