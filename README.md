@@ -1,4 +1,4 @@
-Android App - Mansions of Madness Dice - Part1
+Android App - Mansions of Madness Dice Roller - Part1
 =======================================
 A little while ago, I got into a board game called [Mansions of Madness](https://boardgamegeek.com/boardgame/83330/mansions-madness). The game is a bit like the classic [Clue](https://boardgamegeek.com/boardgame/1294/clue) where players roam around a house trying to solve some mystery. Its an awesome game and I **highly** recommend it. Anyway, the game uses dice rolls to resolve things like moves, events, and combat. Oddly, players are sometimes asked to roll more dice than the game includes (6). I decided that this was a perfect opportunity to build an dice roller app! In this tutorial, we will use basic Android components to build a Mansions of Madness dice roller.
 
