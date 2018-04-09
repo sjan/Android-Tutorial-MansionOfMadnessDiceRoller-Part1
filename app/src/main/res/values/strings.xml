@@ -4,4 +4,5 @@
     <string name="add_button_label">ADD</string>
     <string name="rem_button_label">REM</string>
     <string name="roll_button_label">ROLL</string>
+    <string name="change_button_label">CHANGE</string>
 </resources>

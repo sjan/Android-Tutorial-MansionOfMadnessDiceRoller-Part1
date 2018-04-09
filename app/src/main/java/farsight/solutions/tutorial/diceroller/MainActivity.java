@@ -11,13 +11,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int MAX_DICE_COUNT = 25;
     DiceAdapter diceAdapter;
     List <Dice> diceList = new ArrayList<>();
 
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void rollDice(View view) {
-        //roll all dice
+        //roll all dice that are not being held
         for(Dice dice : diceList) {
             if(!dice.hold)
                 dice.roll();
@@ -48,13 +48,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addDice(View view) {
-        diceAdapter.add(new Dice());
+        if(diceList.size()< MAX_DICE_COUNT) {
+            diceAdapter.add(new Dice());
+        }
     }
 
     public void removeDice(View view) {
-        int index = diceList.size()-1;
-        if(index >= 0) {
-            diceAdapter.remove(diceAdapter.getItem(index));
+        if(!diceList.isEmpty()) {
+            int lastIndex = diceList.size() - 1;
+            diceAdapter.remove(diceAdapter.getItem(lastIndex));
         }
     }
 
@@ -69,14 +71,10 @@ public class MainActivity extends AppCompatActivity {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.dice_row, parent, false);
             }
 
-            //setup dice label
-            TextView textView = convertView.findViewById(R.id.dice_number);
-            textView.setText(Integer.toString(position));
-
             //setup dice image
             ImageView imageView = convertView.findViewById(R.id.dice_icon);
-            final Dice dice = diceAdapter.getItem(position);
-            switch (dice.getValue()) {
+            Dice dice = diceAdapter.getItem(position);
+            switch (dice.diceVal) {
                 case BLANK:
                     imageView.setImageResource(R.drawable.blank_dice);
                     break;
@@ -89,12 +87,23 @@ public class MainActivity extends AppCompatActivity {
             }
 
             //setup dice hold button
-            Button button = convertView.findViewById(R.id.dice_hold_button);
-            button.setOnClickListener(new View.OnClickListener() {
+            Button holdButton = convertView.findViewById(R.id.dice_hold_button);
+            holdButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Dice dice = diceList.get(position);
                     dice.toggleHold();
+                }
+            });
+
+            //setup dice change button
+            Button changeButton = convertView.findViewById(R.id.dice_change_button);
+            changeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Dice dice = diceList.get(position);
+                    dice.nextValue();
+                    diceAdapter.notifyDataSetChanged();
                 }
             });
 
@@ -103,10 +112,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static class Dice {
-        boolean hold = false;
-        public Type value;
-
-        public enum Type {
+        public enum Face {
             BLANK,
             MAGNIFY,
             STAR
@@ -114,21 +120,26 @@ public class MainActivity extends AppCompatActivity {
 
         public static Random random = new Random();
 
+        boolean hold = false;
+        Face diceVal;
+
         Dice() {
             roll();
         }
 
         public void roll() {
-            int num = random.nextInt(Type.values().length);
-            this.value = Type.values()[num];
-        }
-
-        public Type getValue() {
-            return value;
+            int num = random.nextInt(Face.values().length);
+            this.diceVal = Face.values()[num];
         }
 
         public void toggleHold() {
             hold = !hold;
+        }
+
+        public void nextValue() {
+            int index = diceVal.ordinal();
+            index = (index+1) % Face.values().length;
+            diceVal = Face.values()[index];
         }
     }
 }
