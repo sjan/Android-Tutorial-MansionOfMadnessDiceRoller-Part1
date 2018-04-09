@@ -1,23 +1,23 @@
 Android App - Mansions of Madness Dice
 =======================================
-A little while ago, I got into a board game called [Mansions of Madness](https://boardgamegeek.com/boardgame/83330/mansions-madness). The game is a bit like the classic [Clue](https://boardgamegeek.com/boardgame/1294/clue) where player roam around a house trying to solve some mystery. Progressing through the game, situations arise where the player will have to roll dice. The number of dice to roll ranges from 1 to probably like 10. Oddly, the game only includes 6 dice! The game manual suggests that in this case, the player can reuse dice. This works but is pretty annoying - especially when at times during game play the player may reroll. These are **custom 8 sided dice** and when I initially wrote this article,  additional dice were not available to buy, making this a perfect opportunity to build a simple app!
+A little while ago, I got into a board game called [Mansions of Madness](https://boardgamegeek.com/boardgame/83330/mansions-madness). The game is a bit like the classic [Clue](https://boardgamegeek.com/boardgame/1294/clue) where players roam around a house trying to solve some mystery. Progressing through the game, situations arise where the player will have to roll dice. The number of dice to roll ranges from 1 to probably like 10. Oddly, the game only includes 6 dice! Given the fact that the game uses **custom 8 sided dice**, I figure this to be a perfect opportunity to build an app!
 
 ![MoM Dice](./images/dice.jpg)
 
 Requirements
 =============
-The dice app is designed for Mansions of Madness and will facilitate playing the game.
+This dice app is specifically designed for Mansions of Madness gameplay.
 * Custom 8 Sided Dice Mansions of Madness dice have three 3 face types.
   * Magnifying glass
   * Blank
   * Pagan Star
-* **Roll Dice**: Players roll an 8 sided dice. The odds are: 2/8 Blank, 2/8 Magnifying, 4/8 Star.
+* **Roll Dice**: Players roll an 8 sided dice. The odds are: 3/8 Blank, 2/8 Magnifying, 3/8 Star.
 * **Add/Remove Dice**
   * A player can add or remove dice from a roll.
   * Dice count is capped at 25.
 * **Reroll**: Sometimes a player can reroll.
-  * During a rerolls, a player may sometimes KEEP a dice from the previous roll. For our app, we will include a "HOLD" Button.
-  * Sometimes, a player gets the ability to change a dice roll from one result to another. Like, a player can change a magnifying glass result into a star result.
+  * During a rerolls, a player may sometimes Keep a dice from the previous roll. For our app, we will include a "HOLD" Button.
+  * Sometimes, a player gets the ability to change a dice roll from one result to another. Like, a player can change a magnifying glass into a star.
 
 Design
 =======
@@ -61,7 +61,7 @@ To start, I used a simple [SVG editor]() to draw out some dice faces. Then I imp
 Step 2 : Design and Layout
 ================
 
-The Android initial template starts us off with a [````ConstraintLayout````](https://developer.android.com/reference/android/support/constraint/ConstraintLayout.html) root layout element. We'll need two components in this app: Dice List and Button Area. The dice list will be a scrollable dice list and the controllers will be the 3 buttons "ADD" "REMOVE" "ROLL".
+The Android initial empty activity template starts us off with a [````ConstraintLayout````](https://developer.android.com/reference/android/support/constraint/ConstraintLayout.html) root layout element. We'll need two components in this app: Dice area and controller Area. The dice area will be a scrollable dice list and the controller will be the 3 buttons "ADD" "REMOVE" "ROLL".
 
 ![MoM Dice](./images/blueprint_design.png)
 
@@ -187,9 +187,13 @@ Dimen.xml
       <dimen name="image_height">72dp</dimen>
     </resources>
 
+Reading xml does take some getting use to. But each attribute describe some layout property for the layout element.
+
+Why constraint layout
+
 Step 3 ListView and Adapter
 ==============================
-At this point, we've created a basic template Android Project with an Empty Activity and mocked out some layouts.  Next, we'll get into the logic and code. To start, I'd like to get into some more Android specific Java classes. [````ListView````](https://developer.android.com/reference/android/widget/ListView.html) is a basic layout class for rendering visual lists. The Android framework separates the visual components (````ListView````) and data components (````List<Dice>````) by employing an [Adapter Pattern](https://en.wikipedia.org/wiki/Adapter_pattern). In our case, all the adapter does is maps the data(````Dice````) to some visual layout(````dice_row.xml````). In this case, the layout is described in a layout file.
+At this point, we've created a basic template Android Project with an Empty Activity and mocked out some layouts.  Next, we'll get into the logic and code. To start, I'd like to get into some more Android specific Java classes. [````ListView````](https://developer.android.com/reference/android/widget/ListView.html) is a basic layout class for rendering visual lists. The Android framework separates the visual components (````ListView````) and data components (````List<Dice>````) by employing an [Adapter Pattern](https://en.wikipedia.org/wiki/Adapter_pattern). In our case, all the adapter does is map the data(````Dice````) to some visual layout(````dice_row.xml````). In this case, the layout is described in a layout file.
 
     public class MainActivity extends AppCompatActivity {
         DiceAdapter diceAdapter;
@@ -198,7 +202,7 @@ At this point, we've created a basic template Android Project with an Empty Acti
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            //Connecting activity to layout
+            //associating activity to layout
             setContentView(R.layout.activity_main);
 
             //Setup ListView and Adapter
@@ -276,7 +280,7 @@ Screenshot of app
 Step 4 Buttons
 =====================
 
-In this step we map button clicks to logic. The Android platform offers a couple ways to do this. One way is to specify an attribute from the layout file. Another is to programmatically set the ````onClickListener````.
+In this step we map button clicks to logic. The Android platform offers a couple ways to do this. One way is to specify an attribute from the layout file. Another is to programmatically set the ````onClickListener````. In our case we use both approaches. I generally find that specifying the callback in the layout to be more convenient approach. However in out case we have buttons in each row. Since each dice row las slightly different logic, I programmatically set the listener.
 
 Add Button
 -------------
@@ -365,6 +369,9 @@ Activity
         diceAdapter.notifyDataSetChanged();
     }
     ....
+
+Explain Notify datasetchanged
+
 
 Hold Button
 ----
