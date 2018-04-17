@@ -1,0 +1,14 @@
+<svg width="254" height="254" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <g>
+  <title>Layer 1</title>
+  <polygon id="svg_2" fill="#FF0000" points="17.5,7 17.5,7 17.5,7 17.5,7 17.5,7 17.5,7 " stroke="#000000" stroke-width="5"/>
+  <polygon id="svg_6" fill="#FF0000"/>
+  <polygon id="svg_7" fill="#FF0000" points="243.5,111 243.5,111 243.5,111 243.5,111 243.5,111 243.5,111 " stroke-width="6"/>
+  <polygon id="svg_8" fill="#FF0000"/>
+  <polygon id="svg_10" fill="#FF0000" points="247.563720703125,127 186.5318603515625,232.71029663085938 64.4681396484375,232.71029663085938 3.436279296875,127 64.4681396484375,21.289703369140625 186.5318603515625,21.289703369140625 247.563720703125,127 " stroke="#000000" stroke-width="6" transform="rotate(90 125.50000000000001,127) "/>
+  <polygon id="svg_14" fill="#FF0000" points="236.86468505859375,111 62.317657470703125,211.7747802734375 62.317657470703125,10.225223541259766 236.86468505859375,111 " stroke="#000000" stroke-width="6" transform="rotate(-30 149.59118652343747,111) "/>
+  <ellipse ry="26" rx="28" id="svg_3" cy="105.5" cx="96.5" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="6" stroke="#000000" fill="#FF0000"/>
+  <line stroke="#000000" id="svg_9" y2="158.5" x2="163.5" y1="125.5" x1="120.5" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="6" fill="none"/>
+ </g>
+</svg>

@@ -1,0 +1,18 @@
+<svg width="254" height="254" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <g>
+  <title>Layer 1</title>
+  <polygon stroke-width="5" stroke="#000000" points="17.5,7 17.5,7 17.5,7 17.5,7 17.5,7 17.5,7 " fill="#FF0000" id="svg_2"/>
+  <polygon fill="#FF0000" id="svg_6"/>
+  <polygon stroke-width="6" points="243.5,111 243.5,111 243.5,111 243.5,111 243.5,111 243.5,111 " fill="#FF0000" id="svg_7"/>
+  <polygon fill="#FF0000" id="svg_8"/>
+  <polygon transform="rotate(90 125.50000000000001,127) " stroke-width="6" stroke="#000000" points="247.563720703125,127 186.5318603515625,232.71029663085938 64.4681396484375,232.71029663085938 3.436279296875,127 64.4681396484375,21.289703369140625 186.5318603515625,21.289703369140625 247.563720703125,127 " fill="#FF0000" id="svg_10"/>
+  <polygon transform="rotate(-30 149.59118652343747,111) " stroke-width="6" stroke="#000000" points="236.86468505859375,111 62.317657470703125,211.7747802734375 62.317657470703125,10.225223541259766 236.86468505859375,111 " fill="#FF0000" id="svg_14"/>
+  <path fill="none" stroke="#000000" stroke-width="6" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" opacity="0.5" d="m88.5,-76.5" id="svg_19"/>
+  <text fill="#000000" stroke="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="-206.5" y="14.5" id="svg_20" font-size="24" font-family="serif" text-anchor="middle" xml:space="preserve"/>
+  <text fill="#000000" stroke="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="-524.5" y="5.5" id="svg_21" font-size="24" font-family="serif" text-anchor="middle" xml:space="preserve"/>
+  <text fill="#000000" stroke="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="-588.5" y="172.5" id="svg_22" font-size="24" font-family="serif" text-anchor="middle" xml:space="preserve"/>
+  <text fill="#000000" stroke="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="-275.5" y="248.5" id="svg_23" font-size="24" font-family="serif" text-anchor="middle" xml:space="preserve"/>
+  <path id="svg_3" d="m61.5,107c33.00025,-10 123,-26.5 140,-21c-50,17 -72.5,83 -81,115c-29,-42 -10.5,-108 1,-125.5c24.5,21 31.5,56.5 36,92.5c-34,-49.5 -74.00025,-57 -96,-61z" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" stroke="#000000" fill="#FF0000"/>
+ </g>
+</svg>
