@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             Dice dice = diceAdapter.getItem(position);
             switch (dice.diceVal) {
                 case BLANK:
-                    imageView.setImageResource(R.drawable.blank_dice);
+                    imageView.setImageResource(R.drawable.blank);
                     break;
                 case MAGNIFY:
                     imageView.setImageResource(R.drawable.magnifying_glass);

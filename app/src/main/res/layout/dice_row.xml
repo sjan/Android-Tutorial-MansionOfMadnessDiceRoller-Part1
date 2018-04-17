@@ -22,7 +22,7 @@
         android:layout_centerInParent="true"
         android:layout_width="@dimen/image_width"
         android:layout_height="@dimen/image_height"
-        android:src="@drawable/blank_dice"/>
+        android:src="@drawable/blank"/>
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="@dimen/row_height"

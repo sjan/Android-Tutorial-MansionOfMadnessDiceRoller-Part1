@@ -1,75 +1,130 @@
-Android App - Mansions of Madness Dice Roller - Part1
+Android Tutorial - Dice Roller App for Mansions of Madness - Part 1 of 5
 =======================================
-A little while ago, I got into a board game called [Mansions of Madness](https://boardgamegeek.com/boardgame/83330/mansions-madness). The game is a bit like the classic [Clue](https://boardgamegeek.com/boardgame/1294/clue) where players roam around a house trying to solve some mystery. Its an awesome game and I **highly** recommend it. Anyway, the game uses dice rolls to resolve things like moves, events, and combat. Oddly, players are sometimes asked to roll more dice than the game includes (6). I decided that this was a perfect opportunity to build an dice roller app! In this tutorial, we will use basic Android components to build a Mansions of Madness dice roller.
+Concepts Covered:
+-----------------
+* Analysis - Problem Definition and Solution Proposal
+* Android Topics
+  * Creating Android Project
+  * Importing SVG into VectorDrawable
+  * Basic Layout [````RelativeLayout````, ````ConstraintLayout````, ````LinearLayout````]
+  * ````ListView````
+  * ````Adapter````
 
-![MoM Dice](./images/dice.jpg)
+The Idea
+----------------
+A little while ago, I got into this board game [Mansions of Madness](https://boardgamegeek.com/boardgame/83330/mansions-madness). The game is a bit like the classic [Clue](https://boardgamegeek.com/boardgame/1294/clue) where players roam around a house trying to solve some mystery. Its an awesome game and I **highly** recommend it. Anyway, the game uses dice rolls to resolve actions, and other game events. Oddly, players sometimes have to roll more dice than the game includes (6)! I decided that this was a perfect opportunity to build a custom dice roller app. In this tutorial, I will use basic Android components to build a Mansions of Madness dice roller.
 
-Requirements
-=============
-This dice app is specifically designed for Mansions of Madness gameplay.
+![Mansions of Madness Dice](./images/dice.jpg)
 
-* Custom 8 Sided Dice Mansions of Madness dice have three 3 face types.
-  * Magnifying glass, 2 faces
-  * Blank, 3 faces
-  * Pagan Star, 3 faces
-* **Roll Dice**: Players roll an 8 sided dice. The odds are: 37.5% Blank, 25% Magnifying, 37.5% Star.
-* **Add/Remove Dice**
-  * A player can add or remove dice from a roll.
-  * 25 is the max dice count.
+Dice Rolling in Mansions of Madness
+----------------
+This dice app is specifically designed for Mansions of Madness gameplay so first I'll outline how the game uses dice.
+
+* **Dice Count**: Players roll between 1 and 10 dice to resolve game events. The number of dice depends on factors like the player's character and the specific event.
+* **Probability**: The dice is 8 sided. The odds are:
+  * Blank, 3 faces, 37.5%
+  * Star, 3 faces, 37.5%
+  * Magnifying, 2 faces, 25%
 * **Reroll**: Sometimes a player can reroll.
-  * During a rerolls, a player may keep and hold a dice from the previous roll. For our app, we will include a "HOLD" Button.
-  * Sometimes, a player gets the ability to change a dice roll from one result to another. For example, a player can change a magnifying glass into a star.
+  * **Hold** A player may keep and hold a dice from the previous roll. For example, if a player rolls 3 stars and 1 blank. The player may re-roll that blank.
+  * **Change** A player may sometimes change a dice roll from one result to another. For example, if a player  rolls 2 blanks and one magnify. That player may change that magnify result into a star result.
 
-Design
-=======
-To keep things simple, the app will be a vertical list of dice. Other than the dice list, we need buttons to trigger functions like "Roll Dice", "Add Dice" and "Remove Dice".
+The Design
+-------------
+To keep things simple, the app will be a vertical, scrollable list of dice. The app will have 3 buttons to trigger functions "Roll Dice", "Add Dice" and "Remove Dice". Each Dice will have a corresponding 'Hold' and 'Change'.
 
-![App Design](./images/app_design.png)
+![App Design](./images/part1_app_design.png)
 
-Implementation Steps
+Step Summary
 ======================
 0. Setup Project
-1. Images: Dice faces [Magnifying Glass, Star, Blank]
+1. Images: Dice Face SVG
 2. Design and Layout
     * Container layout : Overall layout for the app.
     * Row layout: layout for each dice row.
 3. Implement Dice list
-    * ListView and Adapter Logic: the logic backing the [ListView](https://developer.android.com/reference/android/widget/ListView.html)
-    * Add Dice object representation
+    * [````ListView````](https://developer.android.com/reference/android/widget/ListView.html) and [````Adapter````](https://developer.android.com/reference/android/widget/ArrayAdapter.html) Logic
+    * Add Dice object model representation
 4. Implement Buttons
     * Add dice
     * Remove dice
     * Hold dice
     * Roll dice
 
-Step 0 : Setup Project
+Step 0 : Android Project Setup
 ======================
-The Android platform is always shifting, making tutorials like these obsolete over time. My April 2018 dev environment:
-
+The Android platform is always shifting, making tutorials like these obsolete over time. For reference, my Dev environment:
 * Windows 10
 * Android Studio V3.1
+
+Android Environment
 * Gradle V3.0.1
 * Android SDK V3.1
-* Empty Activity Template
+* Minimum Android version 19 (90.1% device coverage)
+* Target Android version 27
 
-For this app, i'm targetting Android version 27 with a minimum sdk version of 17.
+![Create New Project 1](./images/part1_android_studio1.png)
+
+![Create New Project 2](./images/part1_android_studio2.png)
+
+### What is this Application/Package Name for? ###
+
+* **Application name**: Name of the app.
+* **Company domain**: This is part of the app's Identity. Android associates the app to the creator to avoid naming conflicts. Imagine 'Stephen' builds an app called "DiceRoller" and 'Joe' builds an app also called "DiceRoller". To deal with this naming collision, Android asks that Stephen and Joe identify thier apps with  company domains. This doesn't really come into play too much the app is published into the Playstore.
+* **Project location**: Where to put the project in your local file system
+* **Package name**: This is the namespace that the app's java classes will use. By default, they line up with the company domain. More about package domains can be found all around the internet including [Java documentation](https://docs.oracle.com/javase/tutorial/java/package/packages.html).
+
+All of these names can be changed *after* project creation though it can get cumbersome to chase all the name references if the project gets complex.
+
+![Create New Project 3](./images/part1_android_studio3.png)
+
+### What is minimum SDK Version? ###
+
+Android has many [versions](https://en.wikipedia.org/wiki/Android_version_history). With each release, the platform changes. This basically means there are lots of Android Devices out in the world with different versions. This becomes a headache for app developers because depending on what libraries the app uses, the app may be incompatible with certain devices. The tradeoff here is that app using the new Android libraries cannot run on older devices. If the app must run on older devices, the app must use some of the older Android constructs.
+
+![Create New Project 4](./images/part1_android_studio4.png)
+
+### Why Empty Activity and not Basic Activity? ###
+
+The initial template actually doesn't matter too much for this app. The template code is sometimes useful because it prepopulates the layout and initial classes with some code. Since we're not going to use any of this, I chose empty Activity.
+
+![Create New Project 5](./images/part1_android_studio5.png)
+
+### What Just Happened? What did Android Studio Just do? ###
+
+After going through the Project creation dialogs, Android Studio initializes the project with:
+1. Android Directory Structure
+2. Gradle files: Project level and App Level
+3. Android Manifest
+4. MainActivity
+5. Initial Layout
 
 Step 1 : Images
 ===============
-To start, I used a simple [SVG editor]() to draw out the dice faces as [SVG's](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics). Then I import them into VectorDrawables using Android Studio's Asset Studio.
+To start, I used a simple online SVG editor called [Clker](http://www.clker.com/inc/svgedit/svg-editor.html) to draw out the dice faces as [SVG's](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics).
 
-![Blank](./images/dice_blank.png)
+![Blank Dice](./images/dice_blank.png)
 
-![Magnifying Glass](./images/dice_magnifying.png)
+![Mag Dice](./images/dice_mag.png)
 
-![Star](./images/dice_star.png)
+![Star Dice](./images/dice_star.png)
+
+ Next, I import them into my project using Android Studio's Asset Studio.
+
+![Import Step 1](./images/part1_android_studio_vector1.png)
+
+![Import Step 2](./images/part1_android_studio_vector2.png)
+
+### Why SVG's? ###
+
+Devices have different resolutions and dimensions. Predicting the resolution and dimension of the device the app runs is difficult. Scaling Jpegs can result in blurry or grainy graphics. One way to tackle this is for graphics is to use SVG's. There are numerous articles online discussing SVG's but for reference, please check out the Wikipedia [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics) article for more information.
 
 Step 2 : Design and Layout
 ================
 
 The Android Studio Empty Activity template starts us off with a [````ConstraintLayout````](https://developer.android.com/reference/android/support/constraint/ConstraintLayout.html) root layout element. We'll need two components in this app: Dice area and Controller area. The dice area will be a scrollable dice list and the controller will be the 3 buttons "ADD" "REMOVE" "ROLL".
 
-![MoM Dice](./images/blueprint_design.png)
+![Blueprint Design](./images/part1_blueprint_design.png)
 
     <?xml version="1.0" encoding="utf-8"?>
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -128,7 +183,7 @@ The Android Studio Empty Activity template starts us off with a [````ConstraintL
     </android.support.constraint.ConstraintLayout>
 
 
-For those unfamiliar with xml, the above may look like gibberish. Explaining xml is outside the scope of this tutorial, but Google, YouTube, and Wikipedia are great resources for those looking for more information. For those fluent in XML, you might be wondering about the class references and attributes. For this layout I'm using classes ````ListView````, ````Button````, ````LinearLayout````, and ````ConstraintLayout````. The details around what they are and their attributes can be found on the [Android documentation page](https://developer.android.com/index.html).
+For those unfamiliar with xml, the above may look like gibberish. Explaining xml is outside the scope of this tutorial, but Google, YouTube, and Wikipedia are great resources for those looking for more information. For this layout I'm using classes ````ListView````, ````Button````, ````LinearLayout````, and ````ConstraintLayout````. The details around their attributes can be found on the [Android documentation page](https://developer.android.com/index.html).
 
 ### Why ConstraintLayout and not LinearLayout or RelativeLayout? ###
 
@@ -136,17 +191,17 @@ I was looking for a ````Layout```` that easily describes a fixed height bottom a
 
 ### Why ListView and not LinearLayout? ###
 
-Visually, ````LinearLayout```` looks pretty close to what we need. However, ````LinearLayout```` is for static list of elements rather than dynamic lists. For this app, the Dice list can have anywhere between 0 and 25 dice, making ListView is a better candidate.
+Visually, ````LinearLayout```` looks pretty close to what I need. However, ````LinearLayout```` is for static list of elements rather than dynamic lists. For this app, the Dice list can have anywhere between 0 and 25 dice, making ListView is a better candidate.
 
 ### Why is ListView's height 0dp? ###
 
 The ````0dp```` value is specific to [````ConstraintLayout````](https://developer.android.com/reference/android/support/constraint/ConstraintLayout.html) that indicates that it should fill the remaining space of the parent.
 
-Row Layout
-=======================
+## Row Layout ##
+
 As described above, each dice row includes 2 buttons and a dice image.
 
-![MoM Dice](./images/blueprint_row.png)
+![Blueprint Row](./images/part1_blueprint_row.png)
 
     <?xml version="1.0" encoding="utf-8"?>
     <RelativeLayout
@@ -191,10 +246,9 @@ As described above, each dice row includes 2 buttons and a dice image.
 
 ### Why wrap the Button with FrameLayout? ###
 
-The button sits at the vertical center of the row and some distance from each edge. I felt that the design would be cleaner if the design separated the actual button element and its position in the layout. So for my app, i use the ````FrameLayout```` to specify the position and center the button in that layout.
+The button sits at the vertical center of the row and some distance from each edge. I felt that the design would be cleaner if the design separated the actual button element and its position in the layout. So for my app, I use the ````FrameLayout```` to specify the position and center the button in that layout.
 
-String and Dimension values
-======================
+## String and Dimension values ##
 
 String and Dimension values allow us to not write configuration Strings and Integers directly into code. For our small app, maybe not a big deal.
 
@@ -220,9 +274,9 @@ dimens.xml
       <dimen name="image_height">72dp</dimen>
     </resources>
 
-Step 3 ListView and Adapter
+Step 3 ````ListView```` and ````ArrayAdapter````
 ==============================
-At this point, we've initialized our Android Project with an Empty MainActivity and mocked out some layouts.  Next, we'll get into the logic and code. To start, I'd like to get into some more Android specific Java classes. [````ListView````](https://developer.android.com/reference/android/widget/ListView.html) is a basic layout class for rendering visual lists. The Android framework separates the visual components (````ListView````) and data components (````List<Dice>````) by employing an [Adapter Pattern](https://en.wikipedia.org/wiki/Adapter_pattern). In our case, all the adapter does is map the data(````Dice````) to some visual layout(````dice_row.xml````). In this case, a layout xml file describes the layout.
+At this point, I've initialized our Android Project with an Empty MainActivity and mocked out some layouts.  Next, I'll get into the logic and code. To start, I'd like to get into some more Android specific Java classes. [````ListView````](https://developer.android.com/reference/android/widget/ListView.html) is a basic layout class for rendering visual lists. The Android framework separates the visual components (````ListView````) and data components (````List<Dice>````) by employing an [Adapter Pattern](https://en.wikipedia.org/wiki/Adapter_pattern). In our case, all the adapter does is map the data(````Dice````) to some visual layout(````dice_row.xml````). In this case, a layout xml file describes the layout.
 
     public class MainActivity extends AppCompatActivity {
         DiceAdapter diceAdapter;
@@ -260,9 +314,9 @@ At this point, we've initialized our Android Project with an Empty MainActivity 
     }
 
 
-Step 3 Dice Object
-==================
-The app will represent the dice state with Dice Objects. The Dice object has two properties things: dice value [Blank, Magnify, Star], and whether the dice is 'held'. Functionally, the Dice has a roll method that will randomly select a dice face. Finally, we add a method that changes the dice value to the next on the list.
+## Dice Object
+
+The app will represent the dice state with Dice Objects. The Dice object has two properties things: dice value [Blank, Magnify, Star], and whether the dice is 'held'. Functionally, the Dice has a roll method that will randomly select a dice face. Finally, I add a method that changes the dice value to the next on the list.
 
     MainActivity.java
     ....
@@ -305,16 +359,12 @@ The app will represent the dice state with Dice Objects. The Dice object has two
           index = (index+1) % Face.values().length;
           diceVal = Face.values()[index];
       }
-  }
-
-Screenshot
-
-![Screenshot1](./images/screenshot01.png)
+    }
 
 Step 4 Buttons
 =====================
 
-In this step we map button clicks to logic. The Android platform offers a couple ways to do this. One way is to specify an attribute from the layout file. Another is to programmatically set the ````onClickListener````. In our app, use attribute approach for the three top level buttons and programmatically set the listener for the row buttons.
+In this step I map button clicks to logic. The Android platform offers a couple ways to do this. One way is to specify an attribute from the layout file. Another is to programmatically set the ````onClickListener````. In our app, use attribute approach for the three top level buttons and programmatically set the listener for the row buttons.
 
 Add Button
 -------------
@@ -342,7 +392,7 @@ Logic
        if(diceList.size()< MAX_DICE_COUNT) {
            diceAdapter.add(new Dice());
        }
-   }
+    }
     ....
 
 Remove Button
@@ -446,4 +496,4 @@ Change the diceValue to next.
     });
     ....
 
-![Screenshot1](./images/screenshot02.png)
+![Animation](./images/part1_animation.gif)
