@@ -1,22 +1,49 @@
 Android Tutorial - Dice Roller App for Mansions of Madness - Part 1 of 5
 =======================================
+Building a Minimum Viable Product dice roller Android app using the most basic constructs.
+
+In this tutorial I'm building:
+-----------------------------
+![Screen Video](./images/part1_animation.gif)
+
 Concepts Covered:
 -----------------
-* Analysis - Problem Definition and Solution Proposal
-* Android Topics
-  * Creating Android Project
-  * Importing SVG into VectorDrawable
-  * Basic Layout [````RelativeLayout````, ````ConstraintLayout````, ````LinearLayout````]
-  * ````ListView````
-  * ````Adapter````
+* Analysis - Dice Rolling in Mansions of Madness
+* Topics
+  * Android Studio: Creating An Android Project
+  * Android Studio: Importing SVG into VectorDrawable
+  * Android SDK: Basic Layouts [````RelativeLayout````, ````ConstraintLayout````, ````LinearLayout````]
+  * Android SDK: Lists with ````ListView```` and  ````ArrayAdapter````
 
+Contents
+-------------------
+* Discussion
+    * Idea
+    * Mansions of Madness Dice
+    * Design
+* Android Studio - Project Setup
+* Android Studio - Images, SVG import
+* Android Design and Layout
+    * App layout : Overall layout for the app.
+    * Row layout: layout for each dice row.
+* Lists: Building lists of layouts.
+    * [````ListView````](https://developer.android.com/reference/android/widget/ListView.html) and [````Adapter````](https://developer.android.com/reference/android/widget/ArrayAdapter.html) Logic
+    * Add Dice object model representation
+* Buttons: Triggering logic with buttons
+    * Add dice
+    * Remove dice
+    * Hold dice
+    * Roll dice
+
+Discussion
+==========
 The Idea
 ----------------
 A little while ago, I got into this board game [Mansions of Madness](https://boardgamegeek.com/boardgame/83330/mansions-madness). The game is a bit like the classic [Clue](https://boardgamegeek.com/boardgame/1294/clue) where players roam around a house trying to solve some mystery. Its an awesome game and I **highly** recommend it. Anyway, the game uses dice rolls to resolve actions, and other game events. Oddly, players sometimes have to roll more dice than the game includes (6)! I decided that this was a perfect opportunity to build a custom dice roller app. In this tutorial, I will use basic Android components to build a Mansions of Madness dice roller.
 
 ![Mansions of Madness Dice](./images/dice.jpg)
 
-Dice Rolling in Mansions of Madness
+Dice in Mansions of Madness
 ----------------
 This dice app is specifically designed for Mansions of Madness gameplay so first I'll outline how the game uses dice.
 
@@ -34,22 +61,6 @@ The Design
 To keep things simple, the app will be a vertical, scrollable list of dice. The app will have 3 buttons to trigger functions "Roll Dice", "Add Dice" and "Remove Dice". Each Dice will have a corresponding 'Hold' and 'Change'.
 
 ![App Design](./images/part1_app_design.png)
-
-Step Summary
-======================
-0. Setup Project
-1. Images: Dice Face SVG
-2. Design and Layout
-    * Container layout : Overall layout for the app.
-    * Row layout: layout for each dice row.
-3. Implement Dice list
-    * [````ListView````](https://developer.android.com/reference/android/widget/ListView.html) and [````Adapter````](https://developer.android.com/reference/android/widget/ArrayAdapter.html) Logic
-    * Add Dice object model representation
-4. Implement Buttons
-    * Add dice
-    * Remove dice
-    * Hold dice
-    * Roll dice
 
 Step 0 : Android Project Setup
 ======================
@@ -70,7 +81,7 @@ Android Environment
 ### What is this Application/Package Name for? ###
 
 * **Application name**: Name of the app.
-* **Company domain**: This is part of the app's Identity. Android associates the app to the creator to avoid naming conflicts. Imagine 'Stephen' builds an app called "DiceRoller" and 'Joe' builds an app also called "DiceRoller". To deal with this naming collision, Android asks that Stephen and Joe identify thier apps with  company domains. This doesn't really come into play too much the app is published into the Playstore.
+* **Company domain**: This is part of the app's Identity. Android associates the app to the creator to avoid naming conflicts. Imagine 'Stephen' builds an app called "DiceRoller" and 'Joe' builds an app also called "DiceRoller". To deal with this naming collision, Android asks that Stephen and Joe identify their apps with  company domains. This doesn't really come into play too much the app is published into the Playstore.
 * **Project location**: Where to put the project in your local file system
 * **Package name**: This is the namespace that the app's java classes will use. By default, they line up with the company domain. More about package domains can be found all around the internet including [Java documentation](https://docs.oracle.com/javase/tutorial/java/package/packages.html).
 
@@ -86,18 +97,26 @@ Android has many [versions](https://en.wikipedia.org/wiki/Android_version_histor
 
 ### Why Empty Activity and not Basic Activity? ###
 
-The initial template actually doesn't matter too much for this app. The template code is sometimes useful because it prepopulates the layout and initial classes with some code. Since we're not going to use any of this, I chose empty Activity.
+The initial template actually doesn't matter too much for this app. The template code is sometimes useful because it prepopulates the layout and initial classes with some code. Since I'm not going to use any of this, I chose Empty Activity.
 
 ![Create New Project 5](./images/part1_android_studio5.png)
 
-### What Just Happened? What did Android Studio Just do? ###
+### What just happened? What did Android Studio just do? ###
 
-After going through the Project creation dialogs, Android Studio initializes the project with:
+The Android Project creation dialog initializes the project with basic constructs:
 1. Android Directory Structure
-2. Gradle files: Project level and App Level
-3. Android Manifest
-4. MainActivity
+2. Gradle Build files: Project level and App Level
+3. Android Manifest: Application definition
+4. MainActivity: Application entry point
 5. Initial Layout
+
+### What's Gradle? ###
+
+Gradle is a framework to facilitate building projects. On [Wikipedia](https://en.wikipedia.org/wiki/Gradle)
+
+### What's an Android Manifest? ###
+
+The Android Manifest describe the app to Android. Application properties such as permissions, and Activites. Details can be found on the Android documentation [page](https://developer.android.com/guide/topics/manifest/manifest-intro.html).
 
 Step 1 : Images
 ===============
@@ -119,8 +138,20 @@ To start, I used a simple online SVG editor called [Clker](http://www.clker.com/
 
 Devices have different resolutions and dimensions. Predicting the resolution and dimension of the device the app runs is difficult. Scaling Jpegs can result in blurry or grainy graphics. One way to tackle this is for graphics is to use SVG's. There are numerous articles online discussing SVG's but for reference, please check out the Wikipedia [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics) article for more information.
 
-Step 2 : Design and Layout
-================
+Step 2 : Layout
+===============
+
+Android offers two ways to describe layouts: programmatic and xml [layouts](https://developer.android.com/guide/topics/ui/declaring-layout.html#write). Describing complex layouts programmaticly is pretty difficult so most people generally avoid that. Writing xml may not be all that fun, but Android Studio does offer several tools to ease the pain. a preview tool and a [WSYWIG](https://en.wikipedia.org/wiki/WYSIWYG) layout editor. But even with the editor, diving into the xml is nearly unavoidable.
+
+## Android Studio Layout Preview tool ##
+
+![Layout Editor](./images/part1_android_studio_preview.png)
+
+## Android Studio Layout Editor tool ##
+
+![Preview Tool](./images/part1_android_studio_editor.png)
+
+## Dice Application Layout ##
 
 The Android Studio Empty Activity template starts us off with a [````ConstraintLayout````](https://developer.android.com/reference/android/support/constraint/ConstraintLayout.html) root layout element. We'll need two components in this app: Dice area and Controller area. The dice area will be a scrollable dice list and the controller will be the 3 buttons "ADD" "REMOVE" "ROLL".
 
@@ -465,7 +496,7 @@ The roll button changes the diceValue for the corresponding Dice object. Due to 
 
 Hold Button
 ----
-Set the dice's hold flag
+Clicking hold button will set the dice's hold flag.
 
     MainActivity
     ....
@@ -481,7 +512,7 @@ Set the dice's hold flag
 
 Change Button
 ----
-Change the diceValue to next.
+Clicking hold button will change the dice's value and update interface.
 
     MainActivity
     ....
@@ -495,5 +526,3 @@ Change the diceValue to next.
         }
     });
     ....
-
-![Animation](./images/part1_animation.gif)
