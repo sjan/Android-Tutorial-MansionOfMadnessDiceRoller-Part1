@@ -1,6 +1,6 @@
 Android Tutorial - Dice Roller App for Mansions of Madness - Part 1 of 5
 =======================================
-Building a Minimum Viable Product dice roller Android app using the most basic constructs.
+Building a Minimum Viable Product dice roller Android app using the basic Android constructs.
 
 In this tutorial I'm building:
 -----------------------------
@@ -9,33 +9,37 @@ In this tutorial I'm building:
 Concepts Covered:
 -----------------
 * Analysis - Dice Rolling in Mansions of Madness
-* Topics
-  * Android Studio: Creating An Android Project
-  * Android Studio: Importing SVG into VectorDrawable
-  * Android SDK: Basic Layouts [````RelativeLayout````, ````ConstraintLayout````, ````LinearLayout````]
-  * Android SDK: Lists with ````ListView```` and  ````ArrayAdapter````
+* Android Studio: Creating An Android Project
+* Android Studio: Importing SVG into an Android [````Vector````](https://developer.android.com/guide/topics/graphics/vector-drawable-resources.html)
+* Android SDK: Basic Layouts [````RelativeLayout````, ````ConstraintLayout````, ````LinearLayout````]
+* Android SDK: Lists with ````ListView```` and  ````ArrayAdapter````
 
-Contents
+Reader Requirements
+------------------------
+* Beginner Level Java
+* Beginner XML fluency
+
+Table of Contents
 -------------------
-* Discussion
+* [Discussion](#discussion)
     * Idea
     * Mansions of Madness Dice
     * Design
-* Android Studio - Project Setup
-* Android Studio - Images, SVG import
-* Android Design and Layout
+* [Android Studio - Project Setup](#setup)
+* [Android Studio - Images, SVG import](#svgimport)
+* [Android Design and Layout](#design)
     * App layout : Overall layout for the app.
     * Row layout: layout for each dice row.
-* Lists: Building lists of layouts.
+* [Lists: Building lists of layouts](#lists)
     * [````ListView````](https://developer.android.com/reference/android/widget/ListView.html) and [````Adapter````](https://developer.android.com/reference/android/widget/ArrayAdapter.html) Logic
     * Add Dice object model representation
-* Buttons: Triggering logic with buttons
+* [Buttons: Triggering logic with buttons](#buttons)
     * Add dice
     * Remove dice
     * Hold dice
     * Roll dice
 
-Discussion
+Discussion<a name="discussion"></a>
 ==========
 The Idea
 ----------------
@@ -43,7 +47,7 @@ A little while ago, I got into this board game [Mansions of Madness](https://boa
 
 ![Mansions of Madness Dice](./images/dice.jpg)
 
-Dice in Mansions of Madness
+Mansions of Madness Dice
 ----------------
 This dice app is specifically designed for Mansions of Madness gameplay so first I'll outline how the game uses dice.
 
@@ -62,7 +66,7 @@ To keep things simple, the app will be a vertical, scrollable list of dice. The 
 
 ![App Design](./images/part1_app_design.png)
 
-Step 0 : Android Project Setup
+Step 0 : Android Project Setup<a name="setup"></a>
 ======================
 The Android platform is always shifting, making tutorials like these obsolete over time. For reference, my Dev environment:
 * Windows 10
@@ -118,7 +122,7 @@ Gradle is a framework to facilitate building projects. On [Wikipedia](https://en
 
 The Android Manifest describe the app to Android. Application properties such as permissions, and Activites. Details can be found on the Android documentation [page](https://developer.android.com/guide/topics/manifest/manifest-intro.html).
 
-Step 1 : Images
+Step 1 : Images<a name="setup">svgimport</a>
 ===============
 To start, I used a simple online SVG editor called [Clker](http://www.clker.com/inc/svgedit/svg-editor.html) to draw out the dice faces as [SVG's](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics).
 
@@ -138,7 +142,7 @@ To start, I used a simple online SVG editor called [Clker](http://www.clker.com/
 
 Devices have different resolutions and dimensions. Predicting the resolution and dimension of the device the app runs is difficult. Scaling Jpegs can result in blurry or grainy graphics. One way to tackle this is for graphics is to use SVG's. There are numerous articles online discussing SVG's but for reference, please check out the Wikipedia [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics) article for more information.
 
-Step 2 : Layout
+Step 2 : Layout<a name="design"></a>
 ===============
 
 Android offers two ways to describe layouts: programmatic and xml [layouts](https://developer.android.com/guide/topics/ui/declaring-layout.html#write). Describing complex layouts programmaticly is pretty difficult so most people generally avoid that. Writing xml may not be all that fun, but Android Studio does offer several tools to ease the pain. a preview tool and a [WSYWIG](https://en.wikipedia.org/wiki/WYSIWYG) layout editor. But even with the editor, diving into the xml is nearly unavoidable.
@@ -156,6 +160,8 @@ Android offers two ways to describe layouts: programmatic and xml [layouts](http
 The Android Studio Empty Activity template starts us off with a [````ConstraintLayout````](https://developer.android.com/reference/android/support/constraint/ConstraintLayout.html) root layout element. We'll need two components in this app: Dice area and Controller area. The dice area will be a scrollable dice list and the controller will be the 3 buttons "ADD" "REMOVE" "ROLL".
 
 ![Blueprint Design](./images/part1_blueprint_design.png)
+
+### ````activity_main.xml```` ###
 
     <?xml version="1.0" encoding="utf-8"?>
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -234,6 +240,8 @@ As described above, each dice row includes 2 buttons and a dice image.
 
 ![Blueprint Row](./images/part1_blueprint_row.png)
 
+### ````row.xml```` ###
+
     <?xml version="1.0" encoding="utf-8"?>
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -283,7 +291,7 @@ The button sits at the vertical center of the row and some distance from each ed
 
 String and Dimension values allow us to not write configuration Strings and Integers directly into code. For our small app, maybe not a big deal.
 
-string.xml
+### ````string.xml```` ###
 
     <resources>
       <string name="app_name">DiceRoller</string>
@@ -294,7 +302,7 @@ string.xml
       <string name="roll_button_label">ROLL</string>
     </resources>
 
-dimens.xml
+### ````dimens.xml```` ###
 
     <?xml version="1.0" encoding="utf-8"?>
     <resources>
@@ -305,9 +313,11 @@ dimens.xml
       <dimen name="image_height">72dp</dimen>
     </resources>
 
-Step 3 ````ListView```` and ````ArrayAdapter````
-==============================
+Step 3 ````ListView```` and ````ArrayAdapter````<a name="lists"></a>
+================================================
 At this point, I've initialized our Android Project with an Empty MainActivity and mocked out some layouts.  Next, I'll get into the logic and code. To start, I'd like to get into some more Android specific Java classes. [````ListView````](https://developer.android.com/reference/android/widget/ListView.html) is a basic layout class for rendering visual lists. The Android framework separates the visual components (````ListView````) and data components (````List<Dice>````) by employing an [Adapter Pattern](https://en.wikipedia.org/wiki/Adapter_pattern). In our case, all the adapter does is map the data(````Dice````) to some visual layout(````dice_row.xml````). In this case, a layout xml file describes the layout.
+
+### ````MainActivity.java```` ###
 
     public class MainActivity extends AppCompatActivity {
         DiceAdapter diceAdapter;
@@ -349,7 +359,9 @@ At this point, I've initialized our Android Project with an Empty MainActivity a
 
 The app will represent the dice state with Dice Objects. The Dice object has two properties things: dice value [Blank, Magnify, Star], and whether the dice is 'held'. Functionally, the Dice has a roll method that will randomly select a dice face. Finally, I add a method that changes the dice value to the next on the list.
 
-    MainActivity.java
+
+### ````MainActivity.java```` ###
+
     ....
     public static class Dice {
       public enum Face {
@@ -392,7 +404,7 @@ The app will represent the dice state with Dice Objects. The Dice object has two
       }
     }
 
-Step 4 Buttons
+Step 4 Buttons<a name="buttons"></a>
 =====================
 
 In this step I map button clicks to logic. The Android platform offers a couple ways to do this. One way is to specify an attribute from the layout file. Another is to programmatically set the ````onClickListener````. In our app, use attribute approach for the three top level buttons and programmatically set the listener for the row buttons.
@@ -403,7 +415,8 @@ Add Button
 
 Design
 
-    main_activity.xml
+### ````activity_main.xml```` ###
+
     ....
     <Button
       android:id="@+id/add_dice_button"
@@ -417,7 +430,8 @@ Design
 
 Logic
 
-    MainActivity.java
+### ````MainActivity.java```` ###
+
     ....
     public void addDice(View view) {
        if(diceList.size()< MAX_DICE_COUNT) {
@@ -432,7 +446,8 @@ Remove Button
 
 Design
 
-    main_activity.xml
+### ````activity_main.xml```` ###
+
     ....
     <Button
        android:id="@+id/rem_dice_button"
@@ -446,7 +461,8 @@ Design
 
 Logic
 
-    MainActivity.java
+### ````MainActivity.java```` ###
+
     ....
     public void removeDice(View view) {
           if(!diceList.isEmpty()) {
@@ -462,7 +478,7 @@ Roll Button
 
 Design
 
-    activity_main.xml
+### ````activity_main.xml```` ###
     ....
     <Button
         android:id="@+id/roll_dice_button"
@@ -476,7 +492,7 @@ Design
 
 Logic
 
-    MainActivity
+### ````MainActivity.java```` ###
     ....
     public void rollDice(View view) {
         //roll all dice
@@ -498,7 +514,7 @@ Hold Button
 ----
 Clicking hold button will set the dice's hold flag.
 
-    MainActivity
+### ````MainActivity.java```` ###
     ....
     Button holdButton = convertView.findViewById(R.id.dice_hold_button);
     holdButton.setOnClickListener(new View.OnClickListener() {
@@ -514,7 +530,7 @@ Change Button
 ----
 Clicking hold button will change the dice's value and update interface.
 
-    MainActivity
+### ````MainActivity.java```` ###
     ....
     Button changeButton = convertView.findViewById(R.id.dice_change_button);
     changeButton.setOnClickListener(new View.OnClickListener() {
