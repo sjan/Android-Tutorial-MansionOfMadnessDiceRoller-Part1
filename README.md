@@ -21,7 +21,7 @@ Reader Requirements
 
 Table of Contents
 -------------------
-* [Discussion](#discussion)
+* [Proposal](#proposal)
     * Idea
     * Mansions of Madness Dice
     * Design
@@ -39,11 +39,11 @@ Table of Contents
     * Hold dice
     * Roll dice
 
-Discussion<a name="discussion"></a>
+Proposal <a name="proposal"></a>
 ==========
 The Idea
 ----------------
-A little while ago, I got into this board game [Mansions of Madness](https://boardgamegeek.com/boardgame/83330/mansions-madness). The game is a bit like the classic [Clue](https://boardgamegeek.com/boardgame/1294/clue) where players roam around a house trying to solve some mystery. Its an awesome game and I **highly** recommend it. Anyway, the game uses dice rolls to resolve actions, and other game events. Oddly, players sometimes have to roll more dice than the game includes (6)! I decided that this was a perfect opportunity to build a custom dice roller app. In this tutorial, I will use basic Android components to build a Mansions of Madness dice roller.
+A little while ago, I got into this board game [Mansions of Madness](https://boardgamegeek.com/boardgame/83330/mansions-madness). The game is a bit like the classic [Clue](https://boardgamegeek.com/boardgame/1294/clue) where players roam around a house trying to solve some mystery. It's an awesome game that I **highly** recommend. Anyway, the game uses dice rolls to resolve actions, and other game events. Oddly, players sometimes have to roll more dice than the game includes (6)! I decided that this was a perfect opportunity to build a custom dice roller app. In this tutorial, I will use basic Android components to build a Mansions of Madness dice roller.
 
 ![Mansions of Madness Dice](./images/dice.jpg)
 
@@ -122,7 +122,7 @@ Gradle is a framework to facilitate building projects. On [Wikipedia](https://en
 
 The Android Manifest describe the app to Android. Application properties such as permissions, and Activites. Details can be found on the Android documentation [page](https://developer.android.com/guide/topics/manifest/manifest-intro.html).
 
-Step 1 : Images<a name="setup">svgimport</a>
+Step 1 : Images<a name="svgimport"></a>
 ===============
 To start, I used a simple online SVG editor called [Clker](http://www.clker.com/inc/svgedit/svg-editor.html) to draw out the dice faces as [SVG's](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics).
 
